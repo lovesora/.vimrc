@@ -149,7 +149,7 @@ set hidden "                        " 设置不需要保存就可以切换buffer
 
 " search
 set ignorecase                      " 设置搜索时忽略大小写
-set hlsearch                        " 高亮显示搜索匹配到的字符串
+" set hlsearch                        " 高亮显示搜索匹配到的字符串
 set incsearch                       " 在程序中查询一单词，自动匹配单词的位置
 set backspace=2                     " 设置退格键可用
 set backspace=indent,eol,start      " 让backspace能够删除特定字符
@@ -211,7 +211,6 @@ Plugin 'MattesGroeger/vim-bookmarks'                                " Bookmarks
 
 " 搜索
 Plugin 'kien/ctrlp.vim'                                             " 文件搜索打开
-Plugin 'tacahiroy/ctrlp-funky'                                      " 函数搜索
 Plugin 'vim-scripts/matchit.zip'                                    " 允许:%s使用正则匹配
 Plugin 'Lokaltog/vim-easymotion'                                    " 高级搜索
 Plugin 'unblevable/quick-scope'                                     " 单词匹配
@@ -231,6 +230,12 @@ Plugin 'Valloric/MatchTagAlways'                                    " html tag�
 Plugin 'Chiel92/vim-autoformat', {'on': 'Autoformat'}               " 自动格式化
 " bad performance
 " Plugin 'pangloss/vim-javascript'                                    " 对齐，语法
+
+" typescript
+Plugin 'leafgarland/typescript-vim'                                 " ts highlight
+Plugin 'Quramy/vim-js-pretty-template'                              " provides syntax highlight for contents in Template Strings
+Plugin 'quramy/tsuquyomi'                                           " typescript
+" Plugin 'tpope/vim-pathogen'                                         " typescript
 
 " json
 Plugin 'elzr/vim-json'                                              " json语法高亮
@@ -274,6 +279,7 @@ colorscheme molokai
 " autocmd vimenter * NERDTree
 " 将 NERDTree 的窗口设置在 vim 窗口的右侧（默认为左侧）
 let NERDTreeWinPos="right"
+let NERDTreeWinSize=50
 " 当打开 NERDTree 窗口时，自动显示 Bookmarks
 let NERDTreeShowBookmarks=1
 " 关闭vim时，如果打开的文件除了NERDTree没有其他文件时，它自动关闭，减少多次按:q!
@@ -355,12 +361,6 @@ let g:ctrlp_custom_ignore = {
 
 
 
-" ---------------------------------------------------------------
-" ctrlp-funky
-" ---------------------------------------------------------------
-let g:ctrlp_funky_matchtype = 'path'    " MATCHED CHARS HIGHLIGHTING
-
-
 
 " ----------------------------------------------------------------------------
 " syntastic
@@ -372,6 +372,7 @@ let g:syntastic_style_warning_symbol='•'
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_typescript_checkers = ['tslint']
 let g:syntastic_mode_map = {
     \ "mode": "active",
     \ "active_filetypes": [],
@@ -500,6 +501,24 @@ let g:javascript_plugin_jsdoc = 1               " Enables syntax highlighting fo
 let g:javascript_plugin_ngdoc = 1               " Enables some additional syntax highlighting for NGDocs. Requires JSDoc plugin to be enabled as well.
 
 
+
+" ---------------------------------------------------------------
+" typescript
+" quramy/tsuquyomi
+" ---------------------------------------------------------------
+let g:tsuquyomi_disable_default_mappings = 1
+let g:tsuquyomi_shortest_import_path = 1
+autocmd FileType typescript nmap <buffer> <Leader>rn <Plug>(TsuquyomiRenameSymbol)
+autocmd FileType typescript nmap <buffer> <Leader>rN <Plug>(TsuquyomiRenameSymbolC)
+autocmd FileType typescript nmap <buffer> <Leader>lr <Plug>(TsuquyomiReferences)
+autocmd FileType typescript nmap <buffer> <Leader>li <Plug>(TsuquyomiImplementation)
+autocmd FileType typescript nmap <buffer> <Leader>jd <Plug>(TsuquyomiDefinition)
+autocmd FileType typescript nmap <buffer> <Leader>jD <Plug>(TsuquyomiTypeDefinition)
+autocmd FileType typescript nmap <buffer> <Leader>sa :TsuSearch 
+autocmd FileType typescript nmap <buffer> <Leader>i  :TsuImport<CR>
+
+
+
 " ---------------------------------------------------------------
 " vim-markdown
 " ---------------------------------------------------------------
@@ -552,6 +571,11 @@ mapc!
 
 let mapleader=" "                   " 设置leader键
 
+" default
+" <C-e> 屏幕向下移动一行
+" <C-y> 屏幕向上移动一行
+
+" <C-o> 上次光标所在位置
 
 " custom
 " imap <C-i>d <Esc>:read !date<CR>a
@@ -560,9 +584,6 @@ let mapleader=" "                   " 设置leader键
 " search
 let g:ctrlp_map = '<c-p>'
 nnoremap <leader>sa :Ack<space>
-nnoremap <Leader>sf :CtrlPFunky<Cr>
-" narrow the list down with a word under cursor
-nnoremap <Leader>sF :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 
 " edit
@@ -620,7 +641,7 @@ map <leader>+ :vertical resize +10<CR>
 map <leader>- :vertical resize -10<CR>
 map <leader>w+ :resize +10<CR>
 map <leader>w- :resize -10<CR>
-map <leader>ws :vertical resize 31<CR>
+map <leader>ws :vertical resize 50<CR>
 map [[ gT
 map ]] gt
 
@@ -713,3 +734,4 @@ autocmd BufEnter * :call BookmarkMapKeys()
 autocmd BufEnter NERD_tree_* :call BookmarkUnmapKeys()
 
 nnoremap <F4> :exec exists('syntax_on') ? 'syn off': 'syn on'<CR>
+
