@@ -3,26 +3,14 @@
 " ------------------------------------------------------------------------------------------------------------------------------
 " tags:
 " brew install ctags
+" js:
 " npm install -g git+https://github.com/ramitos/jsctags.git
+" ts:
+" npm install --global git+https://github.com/Perlence/tstags.git
 " ------------------------------------------------------------------------------------------------------------------------------
 " YCM:
 " cd ~/.vim/bundle/YouCompleteMe/
 " ./install.sh
-" ------------------------------------------------------------------------------------------------------------------------------
-" tern_for_vim:
-" cd ~/.vim/bundle/tern_for_vim
-" npm install
-" cd ~/project/.tern-project
-" {
-"     libs": [
-"         browser",
-"         jquery"
-"     ],
-"     loadEagerly": [
-"         importantfile.js"
-"     ],
-"     plugins": {}
-" }
 " ------------------------------------------------------------------------------------------------------------------------------
 " js-format
 " npm install -g js-beautify
@@ -35,11 +23,73 @@
 " ------------------------------------------------------------------------------------------------------------------------------
 
 
+
 " ------------------------------------------------------------------------------------------------------------------------------
-" 快捷键
+" 快捷键配置 mapping
 " ------------------------------------------------------------------------------------------------------------------------------
+" 屏幕控制
+" <C-e>                 屏幕向下移动一行
+" <C-y>                 屏幕向上移动一行
+" <C-d>                 向下移动半屏
+" <C-f>                 向下移动一屏
+" <C-b>                 向上移动一屏
+" <C-u>                 向上移动半屏
+" z-                    将光标所在行移到屏幕底部
+" z.                    将光标所在行移到屏幕中间
+" z<CR>                 将光标所在行移到屏幕顶部
+
+
+" 光标控制
+" h j k l               左下上右
+" 0 ^ $                 行首，非空白符行首，行末
+" - +                   上一行第一个字符，下一行第一个字符
+" H M L                 屏首，屏中，屏尾(保持列位置不变)
+" w e b                 下一个单词第一个字符，下一个单词最后一个字符，上一个单词第一个字符
+" ( ) { }               上／下句首尾（无任何字符空行分隔），上／下段行（无字符空行）
+" %                     匹配括号移动
+" `` ''                 上一个位置
+" m. `.                 标记、跳转（.指的一个字符）
+" n<CR>                 向下跳转n行
+" :n<CR> nG             跳转到n行
+" 1G gg :0<CR>          文件第一行
+" G :$<CR>              文件最后一行
+
+
+" javascript
+" <C-]>                 转到定义
+" <Leader>et            打印变量类型
+" <Leader>lr            列出变量引用
+" <Leader>pd            弹出文档
+" <Leader>rn            重命名变量
+
+
+" typescript
+" <Leader>rn            重命名变量
+" <Leader>rN            重命名变量，包括注释内的变量名
+" <Leader>lr            列出变量引用
+" <Leader>li            列出变量引用所在的文件
+" <C-]>                 跳转到变量定义
+" <Leader>jd            跳转到变量类型定义
+" <Leader>sa            搜索变量名
+" <Leader>i             自动导入
+" <Leader>et            打印变量类型
+
+
+" default
+" <C-o> 上次光标所在位置
+
+
+" jump
+" <C-o> 跳转到上次编辑
+
+
+" buffer
+" <C-^>                 切换当前缓冲区和上一个缓冲区
+" <C-w>                 关闭当前缓冲区
+" :ls                   列出所有缓冲区
+
+
 " nerdcommenter
-"
 " [number]<leader>cc        注释
 " [number]<leader>cu        取消注释
 " [number]<leader>c<space>  toggle注释
@@ -55,7 +105,38 @@
 " <c-y>d：选中整个标签
 " <c-y>D：选中整个标签的内容
 " <c-y>k：删除当前标签
-" ---------------------------------------------------------------
+
+
+" map
+" mapc
+" mapc!
+
+let mapleader=" "                   " 设置leader键
+
+" buffer 通过索引快速跳转
+nnoremap <C-w> :bdelete<CR>
+" nnoremap <Leader>bd :bdelete<CR>
+nnoremap <Leader>[ :bp<CR>
+nnoremap <Leader>] :bn<CR>
+nnoremap <Leader><Left> :bp<CR>
+nnoremap <Leader><Right> :bn<CR>
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
+
+
+
+nnoremap <F4> :exec exists('syntax_on') ? 'syn off': 'syn on'<CR>
+
+inoremap <special> jk <ESC>
+
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -74,7 +155,7 @@ set autoread                        " 文件在外部被修改时自动加载
 " don't beep
 set novisualbell
 set noerrorbells
-set tm=200                          " 设置命令超时时间
+set tm=300                          " 设置命令超时时间
 
 set lazyredraw                      " 在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
 
@@ -203,7 +284,7 @@ Plugin 'mhinz/vim-startify'                                         " 启动显�
 Plugin 'Yggdroot/indentLine'                                        " 显示垂直对齐
 Plugin 'airblade/vim-gitgutter'                                     " 文件编辑时的git提示                           | no config
 Plugin 'Raimondi/delimitMate'                                       " 用于补全括号和引号                            | no config
-Plugin 'Valloric/YouCompleteMe', {'do': './install.py'}             " 代码自动补全
+Plugin 'Valloric/YouCompleteMe', {'do': './install.py --js-completer'}             " 代码自动补全
 Plugin 'ternjs/tern_for_vim'                                        " javascript代码补全
 Plugin 'ruanyl/vim-eslint', {'do': 'npm install'}                   " vim-eslint                                    | no config
 Plugin 'scrooloose/syntastic'                                       " 语法检查
@@ -392,6 +473,7 @@ let g:indentLine_char = '|'             " 修改显示字符
 
 " ------------------------------------------------------------------------------------------------------------------------------
 " YCM
+" type ./ to have filepath completers
 " ------------------------------------------------------------------------------------------------------------------------------
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 let g:ycm_python_binary_path = '/usr/bin/python2.7'
@@ -410,7 +492,10 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
-
+" if !exists("g:ycm_semantic_triggers")
+"     let g:ycm_semantic_triggers = {}
+" endif
+" let g:ycm_semantic_triggers['typescript'] = ['.']
 " nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>       " 跳转到定义处
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
@@ -427,7 +512,12 @@ autocmd FileType javascript setlocal omnifunc=tern#Complete
 " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
 " map
-autocmd FileType javascript nnoremap <leader>d :TernDef<CR>
+autocmd FileType javascript nnoremap <C-]> :TernDef<CR>
+autocmd FileType javascript nnoremap <Leader>et :TernType<CR>
+autocmd FileType javascript nnoremap <Leader>lr :TernRefs<CR>
+autocmd FileType javascript nnoremap <Leader>pd :TernDoc<CR>
+autocmd FileType javascript nnoremap <Leader>rn :TernRename<CR>
+
 
 
 
@@ -462,7 +552,10 @@ nnoremap <silent> <leader>a :ArgWrap<CR>                            " 将参数�
 " brew install ctags
 " npm install -g git+https://github.com/ramitos/jsctags.git
 " ------------------------------------------------------------------------------------------------------------------------------
-set tags=./tags,tags;/                  " 设置tags文件
+set tags=./tags,tags;                   " 设置tags文件
+let g:tagbar_type_javascript = {
+\ 'ctagsbin' : 'jsctags'
+\ }
 let g:tagbar_type_css = {
 \ 'ctagstype' : 'Css',
     \ 'kinds'     : [
@@ -470,6 +563,24 @@ let g:tagbar_type_css = {
         \ 's:selectors',
         \ 'i:identities'
     \ ]
+\ }
+let g:tagbar_type_typescript = {
+  \ 'ctagsbin' : 'tstags',
+  \ 'ctagsargs' : '-f-',
+  \ 'kinds': [
+    \ 'e:enums:0:1',
+    \ 'f:function:0:1',
+    \ 't:typealias:0:1',
+    \ 'M:Module:0:1',
+    \ 'I:import:0:1',
+    \ 'i:interface:0:1',
+    \ 'C:class:0:1',
+    \ 'm:method:0:1',
+    \ 'p:property:0:1',
+    \ 'v:variable:0:1',
+    \ 'c:const:0:1',
+  \ ],
+  \ 'sort' : 0
 \ }
 let g:tagbar_show_linenumbers = 1       " 设置显示绝对行号
 let g:tagbar_indent = 2                 " tagbar缩进大小
@@ -537,14 +648,14 @@ let g:ctrlp_map = '<c-p>'
 " ------------------------------------------------------------------------------------------------------------------------------
 let g:EasyMotion_smartcase = 1      " 忽略大小写
 
-map <leader>sl <Plug>(easymotion-lineforward)
-map <leader>sj <Plug>(easymotion-j)
-map <leader>sk <Plug>(easymotion-k)
-map <leader>sh <Plug>(easymotion-linebackward)
-vmap <leader>sl <Plug>(easymotion-lineforward)
-vmap <leader>sj <Plug>(easymotion-j)
-vmap <leader>sk <Plug>(easymotion-k)
-vmap <leader>sh <Plug>(easymotion-linebackward)
+map sl <Plug>(easymotion-lineforward)
+map sj <Plug>(easymotion-j)
+map sk <Plug>(easymotion-k)
+map sh <Plug>(easymotion-linebackward)
+vmap sl <Plug>(easymotion-lineforward)
+vmap sj <Plug>(easymotion-j)
+vmap sk <Plug>(easymotion-k)
+vmap sh <Plug>(easymotion-linebackward)
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
@@ -566,8 +677,14 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " ------------------------------------------------------------------------------------------------------------------------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-nnoremap <leader>sa :Ack<space>
+" nnoremap <leader>sa :Ack<space>
+function! Search(string)
+  set shellpipe=>
+  execute "Ack! \"" . a:string . "\""
+  set shellpipe=2>&1\|tee
+endfunction
 
+nnoremap <C-F> :call Search("")<left><left>
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -609,7 +726,7 @@ endfunction
 " vim-autoformat
 " require: npm install -g js-beautify
 " ------------------------------------------------------------------------------------------------------------------------------
-autocmd FileType javascript,json,html,css,scss noremap <buffer>  <leader><leader>f :Autoformat<cr>
+autocmd FileType typescript,javascript,json,html,css,scss noremap <buffer>  <leader><leader>f :Autoformat<cr>
 
 
 
@@ -625,9 +742,11 @@ autocmd FileType typescript nmap <buffer> <Leader>lr <Plug>(TsuquyomiReferences)
 autocmd FileType typescript nmap <buffer> <Leader>li <Plug>(TsuquyomiImplementation)
 " autocmd FileType typescript nmap <buffer> <Leader>jd <Plug>(TsuquyomiDefinition)
 autocmd FileType typescript nmap <buffer> <C-]> <Plug>(TsuquyomiDefinition)
-autocmd FileType typescript nmap <buffer> <Leader>jD <Plug>(TsuquyomiTypeDefinition)
+autocmd FileType typescript nmap <buffer> <Leader>jd <Plug>(TsuquyomiTypeDefinition)
 autocmd FileType typescript nmap <buffer> <Leader>sa :TsuSearch 
 autocmd FileType typescript nmap <buffer> <Leader>i  :TsuImport<CR>
+autocmd FileType typescript nmap <buffer> <Leader>et  :echo tsuquyomi#hint()<CR>
+
 let g:tsuquyomi_single_quote_import=1
 
 
@@ -659,52 +778,6 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/bundle/vim-snippets/UltiSnips']
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-l>"
 let g:UltiSnipsJumpBackwardTrigger="<C-h>"
-
-
-
-" ---------------------------------------------------------------
-" 快捷键配置 mapping
-" ---------------------------------------------------------------
-" default
-" <C-e> 屏幕向下移动一行
-" <C-y> 屏幕向上移动一行
-
-" <C-o> 上次光标所在位置
-
-
-" jump
-" <C-o> 跳转到上次编辑
-
-
-
-" map
-" mapc
-" mapc!
-
-let mapleader=" "                   " 设置leader键
-
-" buffer 通过索引快速跳转
-nnoremap <Leader>bd :bdelete<CR>
-nnoremap <Leader>[ :bp<CR>
-nnoremap <Leader>] :bn<CR>
-nnoremap <Leader><Left> :bp<CR>
-nnoremap <Leader><Right> :bn<CR>
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
-
-
-
-nnoremap <F4> :exec exists('syntax_on') ? 'syn off': 'syn on'<CR>
-
-inoremap <special> jk <ESC>
 
 
 
