@@ -240,6 +240,11 @@ set backspace=indent,eol,start      " 让backspace能够删除特定字符
 
 
 
+" buffer
+set wildmenu wildmode=full          " 设置显示buffer匹配结果
+
+
+
 
 " clipboard
 set clipboard=unnamed               " 系统剪切板
