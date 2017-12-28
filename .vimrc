@@ -87,6 +87,9 @@
 " <C-^>                 切换当前缓冲区和上一个缓冲区
 " <C-w>                 关闭当前缓冲区
 " :ls                   列出所有缓冲区
+" :b *.scss<Tab>        模糊搜索tab
+" <Leader>bh            水平分屏
+" <Leader>bv            垂直分屏
 
 
 " nerdcommenter
@@ -105,6 +108,17 @@
 " <c-y>d：选中整个标签
 " <c-y>D：选中整个标签的内容
 " <c-y>k：删除当前标签
+
+
+" 辅助控制
+" <C-y>显示剪切板
+
+
+
+" 显示额外信息
+" <Leader>st                    tag side bar
+" <Leader>su                    undo sidebar
+" <Leader>sy                    yank sidebar
 
 
 " map
@@ -130,6 +144,18 @@ nnoremap <Leader>7 :7b<CR>
 nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
 nnoremap <Leader>0 :10b<CR>
+nnoremap <Leader>11 :11b<CR>
+nnoremap <Leader>12 :12b<CR>
+nnoremap <Leader>13 :13b<CR>
+nnoremap <Leader>14 :14b<CR>
+nnoremap <Leader>15 :15b<CR>
+nnoremap <Leader>16 :16b<CR>
+nnoremap <Leader>17 :17b<CR>
+nnoremap <Leader>18 :18b<CR>
+nnoremap <Leader>19 :19b<CR>
+nnoremap <Leader>10 :20b<CR>
+nnoremap <Leader>bh :sp 
+nnoremap <Leader>bv :vertical sb 
 
 
 
@@ -147,7 +173,7 @@ set nocompatible                    " 去掉有关vi一致性模式，避免以�
 set ttyfast                         " Indicates a fast terminal connection
 
 set nobackup                        " 禁用临时文件
-set noswapfile                      " 禁用生成swap文件
+" set noswapfile                      " 禁用生成swap文件
 
 set history=200                     " 设置历史记录条数(:, search)
 set autoread                        " 文件在外部被修改时自动加载
@@ -284,6 +310,7 @@ Plugin 'sjl/vitality.vim'                                           " 修改在�
 Plugin 'godlygeek/tabular'                                          " 对齐
 Plugin 'tomasr/molokai'                                             " 颜色主题
 Plugin 'mhinz/vim-startify'                                         " 启动显示页
+Plugin 'fholgado/minibufexpl.vim'                                   " buffer优化操作
 
 " 代码辅助
 Plugin 'Yggdroot/indentLine'                                        " 显示垂直对齐
@@ -296,6 +323,7 @@ Plugin 'scrooloose/syntastic'                                       " 语法检�
 Plugin 'FooSoft/vim-argwrap'                                        " 参数一行变多行
 Plugin 'majutsushi/tagbar'                                          " Tag
 Plugin 'MattesGroeger/vim-bookmarks'                                " Bookmarks
+Plugin 'wakatime/vim-wakatime'                                      " 编程时间消耗
 
 " 搜索
 Plugin 'kien/ctrlp.vim'                                             " 文件搜索打开
@@ -309,6 +337,7 @@ Plugin 'terryma/vim-multiple-cursors'                               " 多行编�
 Plugin 'christoomey/vim-sort-motion'                                " 排序                                          | no config
 Plugin 'tpope/vim-repeat'                                           " 重复命令                                      | no config
 Plugin 'tpope/vim-surround'                                         " 包围文本                                      | no config
+Plugin 'vim-scripts/undotree.vim'                                   " undo列表
 
 " html
 Plugin 'mattn/emmet-vim'                                            " Emmet
@@ -335,6 +364,9 @@ Plugin 'vim-markdown'                                               " markdown
 " snippet
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+
+
+Plugin 'vim-scripts/YankRing.vim'                                   " 剪切板操作
 
 
 " 安装插件写在这之前
@@ -594,7 +626,7 @@ let g:tagbar_left = 1                   " 设置tagbar打开时的位置
 let g:tagbar_autofocus = 1              " 当tagbar打开时自动对焦到tagbar
 let g:tagbar_width = 40                 " 设置tagbar默认宽度
 
-nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <Leader>st :TagbarToggle<CR>
 
 
 
@@ -704,6 +736,14 @@ let g:multi_cursor_quit_key='<Esc>'                                 " 退出多�
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
+" undotree.vim
+" ------------------------------------------------------------------------------------------------------------------------------
+let g:undotree_SetFocusWhenToggle = 1
+" Default mapping
+nnoremap <Leader>su :UndotreeToggle<CR>                             " 弹出undo列表
+
+
+" ------------------------------------------------------------------------------------------------------------------------------
 " Emmet vim
 " ------------------------------------------------------------------------------------------------------------------------------
 " 注释
@@ -784,6 +824,13 @@ let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-l>"
 let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 
+
+
+
+" ------------------------------------------------------------------------------------------------------------------------------
+" Yank
+" ------------------------------------------------------------------------------------------------------------------------------
+nnoremap <silent> <Leader>sy :YRShow<CR>
 
 
 
