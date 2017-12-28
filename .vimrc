@@ -366,7 +366,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 
-Plugin 'vim-scripts/YankRing.vim'                                   " 剪切板操作
+" Plugin 'vim-scripts/YankRing.vim'                                   " 剪切板操作
 
 
 " 安装插件写在这之前
@@ -830,7 +830,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 " ------------------------------------------------------------------------------------------------------------------------------
 " Yank
 " ------------------------------------------------------------------------------------------------------------------------------
-nnoremap <silent> <Leader>sy :YRShow<CR>
+" nnoremap <silent> <Leader>sy :YRShow<CR>
 
 
 
