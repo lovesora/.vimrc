@@ -173,7 +173,7 @@ set nocompatible                    " 去掉有关vi一致性模式，避免以�
 set ttyfast                         " Indicates a fast terminal connection
 
 set nobackup                        " 禁用临时文件
-" set noswapfile                      " 禁用生成swap文件
+set noswapfile                      " 禁用生成swap文件
 
 set history=200                     " 设置历史记录条数(:, search)
 set autoread                        " 文件在外部被修改时自动加载
@@ -310,7 +310,6 @@ Plugin 'sjl/vitality.vim'                                           " 修改在�
 Plugin 'godlygeek/tabular'                                          " 对齐
 Plugin 'tomasr/molokai'                                             " 颜色主题
 Plugin 'mhinz/vim-startify'                                         " 启动显示页
-Plugin 'fholgado/minibufexpl.vim'                                   " buffer优化操作
 
 " 代码辅助
 Plugin 'Yggdroot/indentLine'                                        " 显示垂直对齐
@@ -324,6 +323,7 @@ Plugin 'FooSoft/vim-argwrap'                                        " 参数一�
 Plugin 'majutsushi/tagbar'                                          " Tag
 Plugin 'MattesGroeger/vim-bookmarks'                                " Bookmarks
 Plugin 'wakatime/vim-wakatime'                                      " 编程时间消耗
+Plugin 'rizzatti/dash.vim'                                          " dash
 
 " 搜索
 Plugin 'kien/ctrlp.vim'                                             " 文件搜索打开
@@ -360,6 +360,7 @@ Plugin 'gko/vim-coloresque'                                         " 显示颜�
 
 " md
 Plugin 'vim-markdown'                                               " markdown
+Plugin 'iamcco/markdown-preview.vim'                                " markdown preview
 
 " snippet
 Plugin 'SirVer/ultisnips'
@@ -809,6 +810,17 @@ let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_no_default_key_mappings=1
 let g:vim_markdown_frontmatter=1
+
+
+
+" ------------------------------------------------------------------------------------------------------------------------------
+" vim-markdown preview
+" ------------------------------------------------------------------------------------------------------------------------------
+nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
+let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
 
 
 
