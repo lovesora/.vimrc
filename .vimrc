@@ -116,6 +116,9 @@
 " 辅助控制
 " <Leader>d 打开dash
 
+" 选择文本
+" + 扩展选择
+" - 收缩选择
 
 
 " 显示额外信息
@@ -123,6 +126,9 @@
 " <Leader>su                    undo sidebar
 " <Leader>sy                    yank sidebar
 
+" Git
+" Gitv
+" Gdiff, Glog, Gstatus
 
 " map
 " mapc
@@ -180,6 +186,7 @@ set noswapfile                      " 禁用生成swap文件
 
 set history=200                     " 设置历史记录条数(:, search)
 set autoread                        " 文件在外部被修改时自动加载
+au CursorHold * checktime           " 设置自动加载时机
 
 " don't beep
 set novisualbell
@@ -309,27 +316,34 @@ Plugin 'scrooloose/nerdcommenter'                                   " 注释
 " IDE
 Plugin 'bling/vim-airline'                                          " 增强状态栏
 Plugin 'vim-airline/vim-airline-themes'                             " airline theme                                 | no config
+Plugin 'junegunn/limelight.vim'                                     " 关灯
 Plugin 'sjl/vitality.vim'                                           " 修改在不同模式下光标的显示方式                | no config
 Plugin 'godlygeek/tabular'                                          " 对齐
 Plugin 'tomasr/molokai'                                             " 颜色主题
 Plugin 'mhinz/vim-startify'                                         " 启动显示页
+Plugin 'terryma/vim-smooth-scroll'                                  " 平滑滚动
+
 
 " 代码辅助
 Plugin 'Yggdroot/indentLine'                                        " 显示垂直对齐
+Plugin 'tpope/vim-fugitive'                                         " git可视化
 Plugin 'airblade/vim-gitgutter'                                     " 文件编辑时的git提示                           | no config
+Plugin 'gregsexton/gitv'                                            " git树形结构
 Plugin 'Raimondi/delimitMate'                                       " 用于补全括号和引号                            | no config
 Plugin 'Valloric/YouCompleteMe', {'do': './install.py --js-completer'}             " 代码自动补全
 Plugin 'ternjs/tern_for_vim'                                        " javascript代码补全
-Plugin 'ruanyl/vim-eslint', {'do': 'npm install'}                   " vim-eslint                                    | no config
-Plugin 'scrooloose/syntastic'                                       " 语法检查
+" Plugin 'vim-syntastic/syntastic'                                    " 语法检查
+Plugin 'w0rp/ale'                                                   " 语法检查
 Plugin 'FooSoft/vim-argwrap'                                        " 参数一行变多行
 Plugin 'majutsushi/tagbar'                                          " Tag
 Plugin 'MattesGroeger/vim-bookmarks'                                " Bookmarks
 Plugin 'wakatime/vim-wakatime'                                      " 编程时间消耗
 Plugin 'rizzatti/dash.vim'                                          " dash
+Plugin 'terryma/vim-expand-region'                                  " visual模式下的expand选择
 
 " 搜索
 Plugin 'kien/ctrlp.vim'                                             " 文件搜索打开
+Plugin 'junegunn/fzf', { 'do': './install --all' }                  " fzf
 Plugin 'vim-scripts/matchit.zip'                                    " 允许:%s使用正则匹配                           | no config
 Plugin 'Lokaltog/vim-easymotion'                                    " 高级搜索
 Plugin 'unblevable/quick-scope'                                     " 单词匹配
@@ -502,6 +516,15 @@ let g:startify_change_to_vcs_root = 1
 nnoremap <Leader>o :Startify<CR>
 
 
+" ------------------------------------------------------------------------------------------------------------------------------
+" vim-smooth-scroll
+" ------------------------------------------------------------------------------------------------------------------------------
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 6)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 6)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 12)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 12)<CR>
+
+
 
 " ------------------------------------------------------------------------------------------------------------------------------
 " indentLine
@@ -564,20 +587,40 @@ autocmd FileType javascript nnoremap <Leader>rn :TernRename<CR>
 
 " ------------------------------------------------------------------------------------------------------------------------------
 " syntastic
+" debug
+" let g:syntastic_debug=3
+" open test file and run :SyntasticCheck eslint, run :mes
 " ------------------------------------------------------------------------------------------------------------------------------
-let g:syntastic_error_symbol='✘'
-let g:syntastic_warning_symbol='❗'
-let g:syntastic_style_error_symbol='»'
-let g:syntastic_style_warning_symbol='•'
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_typescript_checkers = ['tslint']
-let g:syntastic_mode_map = {
-    \ "mode": "active",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": ["java"] }
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty \<", "inserting implicit ", "unescaped \&" , "lacks \"action", "lacks value", "lacks \"src", "is not recognized!", "discarding unexpected", "replacing obsolete "]
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+"
+" let g:syntastic_error_symbol='✘'
+" let g:syntastic_warning_symbol='❗'
+" let g:syntastic_style_error_symbol='»'
+" let g:syntastic_style_warning_symbol='•'
+"
+" let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_typescript_checkers = ['tslint']
+" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty \<", "inserting implicit ", "unescaped \&" , "lacks \"action", "lacks value", "lacks \"src", "is not recognized!", "discarding unexpected", "replacing obsolete "]
+
+
+
+" ------------------------------------------------------------------------------------------------------------------------------
+" w0rp/ale
+" ------------------------------------------------------------------------------------------------------------------------------
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'typescript': ['tslint'],
+\}
+let g:ale_fix_on_save = 1
+
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -692,6 +735,12 @@ let g:ctrlp_map = '<c-p>'
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
+" fzf
+" ------------------------------------------------------------------------------------------------------------------------------
+
+
+
+" ------------------------------------------------------------------------------------------------------------------------------
 " easymotion
 " ------------------------------------------------------------------------------------------------------------------------------
 let g:EasyMotion_smartcase = 1      " 忽略大小写
@@ -732,7 +781,7 @@ function! Search(string)
   set shellpipe=2>&1\|tee
 endfunction
 
-nnoremap <C-f> :call Search("")<left><left>
+nnoremap <Leader>f :call Search("")<left><left>
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -853,6 +902,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 " Yank
 " ------------------------------------------------------------------------------------------------------------------------------
 " nnoremap <silent> <Leader>sy :YRShow<CR>
+
 
 
 
