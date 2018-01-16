@@ -24,6 +24,9 @@
 " dash
 " http://xclient.info/s/dash.html?_=4e3cdc67aaa43723cc2ef97687b967eb
 " ------------------------------------------------------------------------------------------------------------------------------
+" ale
+" npm i -g htmlhint stylelint eslint tslint alex
+" ------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -77,6 +80,9 @@
 " <Leader>i             自动导入
 " <Leader>et            打印变量类型
 
+" markdown
+" F8                    打开预览
+" F9                    关闭预览
 
 " default
 " <C-o> 上次光标所在位置
@@ -124,11 +130,18 @@
 " 显示额外信息
 " <Leader>st                    tag side bar
 " <Leader>su                    undo sidebar
-" <Leader>sy                    yank sidebar
 
 " Git
-" Gitv
+" Gitv                          log 可视化
+" Agit                          查看单个文件的提交历史
 " Gdiff, Glog, Gstatus
+
+" lint
+" <Leader>lk 跳转到上一个错误行
+" <Leader>lj 跳转到下一个错误行
+
+" fzf
+" <C-p> 搜索当前pwd文件夹内的文件
 
 " map
 " mapc
@@ -299,106 +312,100 @@ set pastetoggle=<F9>                " 切换到拷贝模式
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
-" vundle 配置
+" Plug Configuration
 " ------------------------------------------------------------------------------------------------------------------------------
-filetype off                  " required
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-set rtp+=~/.vim/bundle/Vundle.vim  " 启用vundle来管理vim插件
-call vundle#begin() 
-
-Plugin 'VundleVim/Vundle.vim'      " let Vundle manage Vundle, required
+call plug#begin('~/.vim/bundle')
+Plug 'VundleVim/Vundle.vim'      " let Vundle manage Vundle, required
 
 " nerdtree
-Plugin 'scrooloose/nerdtree'                                        " 目录结构
-Plugin 'Xuyuanp/nerdtree-git-plugin'                                " 基于nerd的git文件管理
-Plugin 'scrooloose/nerdcommenter'                                   " 注释
+Plug 'scrooloose/nerdtree'                                        " 目录结构
+Plug 'Xuyuanp/nerdtree-git-plugin'                                " 基于nerd的git文件管理
+Plug 'scrooloose/nerdcommenter'                                   " 注释
 
 " IDE
-Plugin 'bling/vim-airline'                                          " 增强状态栏
-Plugin 'vim-airline/vim-airline-themes'                             " airline theme                                 | no config
-Plugin 'junegunn/limelight.vim'                                     " 关灯
-Plugin 'sjl/vitality.vim'                                           " 修改在不同模式下光标的显示方式                | no config
-Plugin 'godlygeek/tabular'                                          " 对齐
-Plugin 'tomasr/molokai'                                             " 颜色主题
-Plugin 'mhinz/vim-startify'                                         " 启动显示页
-Plugin 'terryma/vim-smooth-scroll'                                  " 平滑滚动
+Plug 'bling/vim-airline'                                          " 增强状态栏
+Plug 'vim-airline/vim-airline-themes'                             " airline theme                                 | no config
+Plug 'junegunn/limelight.vim'                                     " 关灯
+Plug 'sjl/vitality.vim'                                           " 修改在不同模式下光标的显示方式                | no config
+Plug 'godlygeek/tabular'                                          " 对齐
+Plug 'tomasr/molokai'                                             " 颜色主题
+Plug 'mhinz/vim-startify'                                         " 启动显示页
 
 
 " 代码辅助
-Plugin 'Yggdroot/indentLine'                                        " 显示垂直对齐
-Plugin 'tpope/vim-fugitive'                                         " git可视化
-Plugin 'airblade/vim-gitgutter'                                     " 文件编辑时的git提示                           | no config
-Plugin 'gregsexton/gitv'                                            " git树形结构
-Plugin 'Raimondi/delimitMate'                                       " 用于补全括号和引号                            | no config
-Plugin 'Valloric/YouCompleteMe', {'do': './install.py --js-completer'}             " 代码自动补全
-Plugin 'ternjs/tern_for_vim'                                        " javascript代码补全
-" Plugin 'vim-syntastic/syntastic'                                    " 语法检查
-Plugin 'w0rp/ale'                                                   " 语法检查
-Plugin 'FooSoft/vim-argwrap'                                        " 参数一行变多行
-Plugin 'majutsushi/tagbar'                                          " Tag
-Plugin 'MattesGroeger/vim-bookmarks'                                " Bookmarks
-Plugin 'wakatime/vim-wakatime'                                      " 编程时间消耗
-Plugin 'rizzatti/dash.vim'                                          " dash
-Plugin 'terryma/vim-expand-region'                                  " visual模式下的expand选择
+Plug 'Yggdroot/indentLine'                                        " 显示垂直对齐
+Plug 'tpope/vim-fugitive'                                         " git可视化
+Plug 'airblade/vim-gitgutter'                                     " 文件编辑时的git提示                           | no config
+Plug 'gregsexton/gitv'                                            " git树形结构                                   | no config
+Plug 'cohama/agit.vim'                                            " 单个文件可视化                                | no config
+Plug 'Raimondi/delimitMate'                                       " 用于补全括号和引号                            | no config
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --js-completer'}             " 代码自动补全
+Plug 'ternjs/tern_for_vim'                                        " javascript代码补全
+Plug 'w0rp/ale'                                                   " 语法检查，异步处理，速度更快，代替syntastic
+Plug 'FooSoft/vim-argwrap'                                        " 参数一行变多行
+Plug 'majutsushi/tagbar'                                          " Tag
+Plug 'MattesGroeger/vim-bookmarks'                                " Bookmarks
+Plug 'wakatime/vim-wakatime'                                      " 编程时间消耗
+Plug 'rizzatti/dash.vim'                                          " dash
+Plug 'terryma/vim-expand-region'                                  " visual模式下的expand选择
 
 " 搜索
-Plugin 'kien/ctrlp.vim'                                             " 文件搜索打开
-Plugin 'junegunn/fzf', { 'do': './install --all' }                  " fzf
-Plugin 'vim-scripts/matchit.zip'                                    " 允许:%s使用正则匹配                           | no config
-Plugin 'Lokaltog/vim-easymotion'                                    " 高级搜索
-Plugin 'unblevable/quick-scope'                                     " 单词匹配
-Plugin 'mileszs/ack.vim'                                            " 全局搜索
+Plug 'junegunn/fzf', { 'do': './install --all' }                  " 文件搜索，代替ctrlp.vim
+Plug 'vim-scripts/matchit.zip'                                    " 允许:%s使用正则匹配                           | no config
+Plug 'Lokaltog/vim-easymotion'                                    " 高级搜索
+Plug 'unblevable/quick-scope'                                     " 单词匹配
+Plug 'mileszs/ack.vim'                                            " 全局搜索
 
 " 编辑
-Plugin 'terryma/vim-multiple-cursors'                               " 多行编辑
-Plugin 'christoomey/vim-sort-motion'                                " 排序                                          | no config
-Plugin 'tpope/vim-repeat'                                           " 重复命令                                      | no config
-Plugin 'tpope/vim-surround'                                         " 包围文本                                      | no config
-Plugin 'vim-scripts/undotree.vim'                                   " undo列表
+Plug 'terryma/vim-multiple-cursors'                               " 多行编辑
+Plug 'christoomey/vim-sort-motion'                                " 排序                                          | no config
+Plug 'tpope/vim-repeat'                                           " 重复命令                                      | no config
+Plug 'tpope/vim-surround'                                         " 包围文本                                      | no config
+Plug 'vim-scripts/undotree.vim'                                   " undo列表
 
 " html
-Plugin 'mattn/emmet-vim'                                            " Emmet
-Plugin 'Valloric/MatchTagAlways'                                    " html tag配对显示                              | no config
+Plug 'mattn/emmet-vim'                                            " Emmet
+Plug 'Valloric/MatchTagAlways'                                    " html tag配对显示                              | no config
 
 " javascript
-Plugin 'Chiel92/vim-autoformat', {'on': 'Autoformat'}               " 自动格式化
-" Plugin 'pangloss/vim-javascript'                                    " 对齐，语法                                    | bad performance
+Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}               " 自动格式化
+" Plug 'pangloss/vim-javascript'                                    " 对齐，语法                                    | bad performance
 
 " typescript
-Plugin 'leafgarland/typescript-vim'                                 " ts highlight
-Plugin 'Quramy/vim-js-pretty-template'                              " provides syntax highlight for contents in Template Strings    | no config
-Plugin 'quramy/tsuquyomi'                                           " typescript
+Plug 'leafgarland/typescript-vim'                                 " ts highlight
+Plug 'Quramy/vim-js-pretty-template'                              " provides syntax highlight for contents in Template Strings    | no config
+Plug 'quramy/tsuquyomi'                                           " typescript
 
 " json
-Plugin 'elzr/vim-json'                                              " json语法高亮
+Plug 'elzr/vim-json'                                              " json语法高亮
 
 " css
-Plugin 'gko/vim-coloresque'                                         " 显示颜色                                      | no config
+Plug 'gko/vim-coloresque'                                         " 显示颜色                                      | no config
 
 " md
-Plugin 'vim-markdown'                                               " markdown
-Plugin 'iamcco/markdown-preview.vim'                                " markdown preview
+Plug 'plasticboy/vim-markdown'                                    " markdown
+Plug 'iamcco/markdown-preview.vim'                                " markdown preview
 
 " snippet
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'lovesora/vim-snippets'
 
 
-" Plugin 'vim-scripts/YankRing.vim'                                   " 剪切板操作
-
-
-" 安装插件写在这之前
-call vundle#end()            " required
-filetype plugin on    " required
+call plug#end()
 
 " 常用命令
-" :PluginList       - 查看已经安装的插件
-" :PluginInstall    - 安装插件
-" :PluginUpdate     - 更新插件
-" :PluginSearch     - 搜索插件，例如 :PluginSearch xml就能搜到xml相关的插件
-" :PluginClean      - 删除插件，把安装插件对应行删除，然后执行这个命令即可
-" h: vundle         - 获取帮助
-
+" PlugInstall [name ...] [#threads]         Install plugins
+" PlugUpdate [name ...] [#threads]          Install or update plugins
+" PlugClean[!]                              Remove unused directories (bang version will clean without prompt)
+" PlugUpgrade                               Upgrade vim-plug itself
+" PlugStatus                                Check the status of plugins
+" PlugDiff                                  Examine changes from the previous update and the pending changes
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -516,15 +523,6 @@ let g:startify_change_to_vcs_root = 1
 nnoremap <Leader>o :Startify<CR>
 
 
-" ------------------------------------------------------------------------------------------------------------------------------
-" vim-smooth-scroll
-" ------------------------------------------------------------------------------------------------------------------------------
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 6)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 6)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 12)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 12)<CR>
-
-
 
 " ------------------------------------------------------------------------------------------------------------------------------
 " indentLine
@@ -584,42 +582,26 @@ autocmd FileType javascript nnoremap <Leader>rn :TernRename<CR>
 
 
 
-
-" ------------------------------------------------------------------------------------------------------------------------------
-" syntastic
-" debug
-" let g:syntastic_debug=3
-" open test file and run :SyntasticCheck eslint, run :mes
-" ------------------------------------------------------------------------------------------------------------------------------
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-"
-" let g:syntastic_error_symbol='✘'
-" let g:syntastic_warning_symbol='❗'
-" let g:syntastic_style_error_symbol='»'
-" let g:syntastic_style_warning_symbol='•'
-"
-" let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-" let g:syntastic_javascript_checkers = ['eslint']
-" let g:syntastic_typescript_checkers = ['tslint']
-" let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute " ,"trimming empty \<", "inserting implicit ", "unescaped \&" , "lacks \"action", "lacks value", "lacks \"src", "is not recognized!", "discarding unexpected", "replacing obsolete "]
-
-
-
 " ------------------------------------------------------------------------------------------------------------------------------
 " w0rp/ale
+" :ALEDetail 查看详情
 " ------------------------------------------------------------------------------------------------------------------------------
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'typescript': ['tslint'],
+\   'javascript':  ['eslint'],
+\   'typescript':  ['tslint'],
 \}
+let g:ale_linters = {
+\   'markdown':  ['alex'],
+\   'scss':      ['stylelint'],
+\}
+let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
+
+" 'html':      ['htmlhint'],
+" let g:ale_html_htmlhint_options = '--config=.htmlhintrc --format=unix'
+
+nmap <silent> <Leader>ek <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>ej <Plug>(ale_next_wrap)
 
 
 
@@ -721,24 +703,49 @@ nmap <silent> <leader>d <Plug>DashSearch
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
-" CtrlP
-" ------------------------------------------------------------------------------------------------------------------------------
-let g:ctrlp_show_hidden = 1             " 搜索隐藏文件
-let g:ctrlp_cmd = 'CtrlP'               " 修改shortcut
-let g:ctrlp_working_path_mode = 'ra'    " 设置默认搜索目录为当前文件所在目录
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  'node_modules'
-  \ }
-
-let g:ctrlp_map = '<c-p>'
-
-
-
-" ------------------------------------------------------------------------------------------------------------------------------
 " fzf
 " ------------------------------------------------------------------------------------------------------------------------------
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
 
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" map
+" in search mode
+" <C-p> previous history
+" <C-n> next history
+" in normal mode
+nnoremap <C-p> :FZF<CR>
 
 " ------------------------------------------------------------------------------------------------------------------------------
 " easymotion
@@ -771,6 +778,11 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " mac: brew install the_silver_searcher
 " or
 " ubuntu: apt-get install silversearcher-ag
+
+" .ackrc
+" --ignore-dir=node_modules
+" --ignore-dir=refactor
+
 " ------------------------------------------------------------------------------------------------------------------------------
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -869,6 +881,7 @@ let g:vim_json_syntax_conceal = 0
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_no_default_key_mappings=1
 let g:vim_markdown_frontmatter=1
+let g:vim_markdown_conceal = 0
 
 
 
@@ -902,7 +915,6 @@ let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 " Yank
 " ------------------------------------------------------------------------------------------------------------------------------
 " nnoremap <silent> <Leader>sy :YRShow<CR>
-
 
 
 
