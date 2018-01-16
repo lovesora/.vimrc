@@ -591,14 +591,14 @@ let g:ale_fixers = {
 \   'typescript':  ['tslint'],
 \}
 let g:ale_linters = {
+\   'html':      ['htmlhint'],
 \   'markdown':  ['alex'],
 \   'scss':      ['stylelint'],
 \}
 let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
 
-" 'html':      ['htmlhint'],
-" let g:ale_html_htmlhint_options = '--config=.htmlhintrc --format=unix'
+" let g:ale_html_htmlhint_options = '--config=./.htmlhintrc --format=unix'
 
 nmap <silent> <Leader>ek <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>ej <Plug>(ale_next_wrap)
