@@ -1,0 +1,22 @@
+{
+  "name": "vimrc",
+  "version": "1.0.0",
+  "description": "vimrc",
+  "main": ".vimrc",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lovesora/vimrc.git"
+  },
+  "keywords": [
+    "vimrc"
+  ],
+  "author": "liuxin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lovesora/vimrc/issues"
+  },
+  "homepage": "https://github.com/lovesora/vimrc#readme"
+}

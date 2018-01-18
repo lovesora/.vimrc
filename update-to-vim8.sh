@@ -15,7 +15,7 @@ make install
 cd ../..
 rm -rf vim
 
-echo '#!/bin/bash' > /usr/local/bin/vim /etc/profile.d/path.sh && echo 'export PATH=$PATH:/usr/local/bin/vim' >> /usr/local/bin/vim /etc/profile.d/path.sh
+echo '#!/bin/bash' > /etc/profile.d/path.sh && echo 'export PATH=$PATH:/usr/local/bin/vim' >> /etc/profile.d/path.sh
 
 source /etc/profile.d/path.sh
 

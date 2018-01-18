@@ -12,9 +12,6 @@
 " cd ~/.vim/bundle/YouCompleteMe/
 " ./install.py --all
 " ------------------------------------------------------------------------------------------------------------------------------
-" js-format
-" npm install -g js-beautify
-" ------------------------------------------------------------------------------------------------------------------------------
 " ack.vim
 " require ag
 " mac: brew install the_silver_searcher
@@ -345,8 +342,8 @@ Plug 'airblade/vim-gitgutter'                                     " 文件编辑
 Plug 'gregsexton/gitv'                                            " git树形结构                                   | no config
 Plug 'cohama/agit.vim'                                            " 单个文件可视化                                | no config
 Plug 'Raimondi/delimitMate'                                       " 用于补全括号和引号                            | no config
-" Plug 'Valloric/YouCompleteMe', {'do': './install.py --js-completer'}             " 代码自动补全
-Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}             " 代码自动补全
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --js-completer'}             " 代码自动补全
+" Plug 'Valloric/YouCompleteMe', {'do': './install.py --all'}             " 代码自动补全
 Plug 'ternjs/tern_for_vim'                                        " javascript代码补全
 Plug 'w0rp/ale'                                                   " 语法检查，异步处理，速度更快，代替syntastic
 Plug 'FooSoft/vim-argwrap'                                        " 参数一行变多行
@@ -916,6 +913,7 @@ let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 " Yank
 " ------------------------------------------------------------------------------------------------------------------------------
 " nnoremap <silent> <Leader>sy :YRShow<CR>
+
 
 
 
