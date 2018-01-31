@@ -264,9 +264,9 @@ set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set termencoding=utf-8
 
 " 设置tab为4个空格
-set shiftwidth=4                    " 设置自动对齐tab为4个空格
-set ts=4                            " 设置tab键为四个空格
-set softtabstop=4                   " 在按退格键时，如果前面有4个空格，则会统一清除
+set shiftwidth=2                    " 设置自动对齐tab为4个空格
+set ts=2                            " 设置tab键为四个空格
+set softtabstop=2                   " 在按退格键时，如果前面有4个空格，则会统一清除
 set expandtab                       " 设置tab为空格
 retab                               " 转换所有的tab
 
@@ -374,6 +374,9 @@ Plug 'Valloric/MatchTagAlways'                                    " html tag配�
 " javascript
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}               " 自动格式化
 " Plug 'pangloss/vim-javascript'                                    " 对齐，语法                                    | bad performance
+Plug 'othree/yajs.vim'                                            " es语法高亮
+Plug 'othree/es.next.syntax.vim'                                  " es语法高亮
+Plug 'othree/javascript-libraries-syntax.vim'                     " js库语法
 
 " typescript
 Plug 'leafgarland/typescript-vim'                                 " ts highlight
@@ -843,6 +846,17 @@ endfunction
 " ------------------------------------------------------------------------------------------------------------------------------
 autocmd FileType typescript,javascript,json,html,css,scss noremap <buffer>  <leader><leader>f :Autoformat<cr>
 
+" ------------------------------------------------------------------------------------------------------------------------------
+" othree/javascript-libraries-syntax.vim
+"-------------------------------------------------------------------------------------------------------------------------------
+autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_angularui = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_angularuirouter = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_react = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_requirejs = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -913,7 +927,6 @@ let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 " Yank
 " ------------------------------------------------------------------------------------------------------------------------------
 " nnoremap <silent> <Leader>sy :YRShow<CR>
-
 
 
 
