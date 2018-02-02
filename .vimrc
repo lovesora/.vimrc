@@ -377,6 +377,7 @@ Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}               " 自动格式
 Plug 'othree/yajs.vim'                                            " es语法高亮
 Plug 'othree/es.next.syntax.vim'                                  " es语法高亮
 Plug 'othree/javascript-libraries-syntax.vim'                     " js库语法
+Plug 'mxw/vim-jsx'                                                " jsx对齐，语法高亮
 
 " typescript
 Plug 'leafgarland/typescript-vim'                                 " ts highlight
@@ -846,6 +847,8 @@ endfunction
 " ------------------------------------------------------------------------------------------------------------------------------
 autocmd FileType typescript,javascript,json,html,css,scss noremap <buffer>  <leader><leader>f :Autoformat<cr>
 
+
+
 " ------------------------------------------------------------------------------------------------------------------------------
 " othree/javascript-libraries-syntax.vim
 "-------------------------------------------------------------------------------------------------------------------------------
@@ -857,6 +860,14 @@ autocmd BufReadPre *.js let b:javascript_lib_use_react = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_requirejs = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
+
+
+
+" ------------------------------------------------------------------------------------------------------------------------------
+" mxw/vim-jsx
+" ------------------------------------------------------------------------------------------------------------------------------
+let g:jsx_ext_required = 0
+
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -890,6 +901,8 @@ let g:vim_json_syntax_conceal = 0
 " ------------------------------------------------------------------------------------------------------------------------------
 " vim-markdown
 " ------------------------------------------------------------------------------------------------------------------------------
+let g:vim_markdown_new_list_item_indent = 0
+
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_no_default_key_mappings=1
 let g:vim_markdown_frontmatter=1
