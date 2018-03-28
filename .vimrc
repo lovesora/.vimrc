@@ -189,7 +189,6 @@ inoremap <special> jk <ESC>
 " ------------------------------------------------------------------------------------------------------------------------------
 " environment
 set nocompatible                    " 去掉有关vi一致性模式，避免以前版本的bug和局限
-set ttyfast                         " Indicates a fast terminal connection
 
 set nobackup                        " 禁用临时文件
 set noswapfile                      " 禁用生成swap文件
@@ -204,6 +203,7 @@ set noerrorbells
 set tm=300                          " 设置命令超时时间
 
 set lazyredraw                      " 在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能
+set ttyfast                         " Indicates a fast terminal connection
 
 
 
@@ -334,6 +334,8 @@ Plug 'godlygeek/tabular'                                          " 对齐
 Plug 'tomasr/molokai'                                             " 颜色主题
 Plug 'mhinz/vim-startify'                                         " 启动显示页
 
+" 异步
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}                        " 异步执行                                      | no config
 
 " 代码辅助
 Plug 'Yggdroot/indentLine'                                        " 显示垂直对齐
@@ -591,19 +593,19 @@ autocmd FileType javascript nnoremap <Leader>rn :TernRename<CR>
 let g:ale_fixers = {
 \   'javascript':  ['eslint'],
 \   'typescript':  ['tslint'],
+\   'scss':        ['stylelint']
 \}
 let g:ale_linters = {
-\   'html':      ['htmlhint'],
-\   'markdown':  ['alex'],
-\   'scss':      ['stylelint'],
+\   'html':       ['htmlhint'],
+\   'typescript': ['tslint'],
+\   'markdown':   ['alex']
 \}
 let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
+let g:airline#extensions#ale#enabled = 1
 
-" let g:ale_html_htmlhint_options = '--config=./.htmlhintrc --format=unix'
-
-nmap <silent> <Leader>ek <Plug>(ale_previous_wrap)
-nmap <silent> <Leader>ej <Plug>(ale_next_wrap)
+nmap <silent> <Leader>nk <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>nj <Plug>(ale_next_wrap)
 
 
 
@@ -874,8 +876,14 @@ let g:jsx_ext_required = 0
 " typescript
 " ------------------------------------------------------------------------------------------------------------------------------
 " quramy/tsuquyomi
-let g:tsuquyomi_disable_default_mappings=1
-let g:tsuquyomi_shortest_import_path=1
+let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_disable_default_mappings = 1
+let g:tsuquyomi_single_quote_import = 1
+let g:tsuquyomi_shortest_import_path = 1
+
+let g:tsuquyomi_definition_split = 2
+let g:tsuquyomi_use_vimproc = 1
+
 autocmd FileType typescript nmap <buffer> <Leader>rn <Plug>(TsuquyomiRenameSymbol)
 autocmd FileType typescript nmap <buffer> <Leader>rN <Plug>(TsuquyomiRenameSymbolC)
 autocmd FileType typescript nmap <buffer> <Leader>lr <Plug>(TsuquyomiReferences)
@@ -887,7 +895,6 @@ autocmd FileType typescript nmap <buffer> <Leader>sa :TsuSearch
 autocmd FileType typescript nmap <buffer> <Leader>i  :TsuImport<CR>
 autocmd FileType typescript nmap <buffer> <Leader>et  :echo tsuquyomi#hint()<CR>
 
-let g:tsuquyomi_single_quote_import=1
 
 
 
@@ -941,6 +948,11 @@ let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 " ------------------------------------------------------------------------------------------------------------------------------
 " nnoremap <silent> <Leader>sy :YRShow<CR>
 
-
+" ------------------------------------------------------------------------------------------------------------------------------
+" MacVim
+" ------------------------------------------------------------------------------------------------------------------------------
+if has("gui_macvim")
+  set guifont=Source\ Code\ Pro\ for\ Powerline:h12
+endif
 
 
