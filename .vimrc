@@ -24,7 +24,10 @@
 " ale
 " npm i -g htmlhint stylelint eslint tslint alex
 " ------------------------------------------------------------------------------------------------------------------------------
-
+" tsuquyomi
+" require ^typescript@2.8.0
+" npm i -g typescript@2.8.0
+" ------------------------------------------------------------------------------------------------------------------------------
 
 
 " ------------------------------------------------------------------------------------------------------------------------------
@@ -298,6 +301,9 @@ set pastetoggle=<F9>                " 切换到拷贝模式
 
 
 
+" filetype
+au BufRead,BufNewFile *.wxml set filetype=xml
+
 
 
 " 设置自动备份
@@ -333,6 +339,7 @@ Plug 'sjl/vitality.vim'                                           " 修改在不
 Plug 'godlygeek/tabular'                                          " 对齐
 Plug 'tomasr/molokai'                                             " 颜色主题
 Plug 'mhinz/vim-startify'                                         " 启动显示页
+Plug 'editorconfig/editorconfig-vim'                              " editconfig
 
 " 异步
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}                        " 异步执行                                      | no config
@@ -385,6 +392,7 @@ Plug 'mxw/vim-jsx'                                                " jsx对齐，
 Plug 'leafgarland/typescript-vim'                                 " ts highlight
 Plug 'Quramy/vim-js-pretty-template'                              " provides syntax highlight for contents in Template Strings    | no config
 Plug 'quramy/tsuquyomi'                                           " typescript
+" Plug 'clausreinke/typescript-tools.vim', { 'do': 'npm install' }  " ts tool
 
 " json
 Plug 'elzr/vim-json'                                              " json语法高亮
@@ -545,9 +553,10 @@ let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 let g:ycm_python_binary_path = '/usr/bin/python2.7'
 " nmap<C-a> :YcmCompleter FixIt<CR>  
 " 
-set completeopt=longest,menu                                               "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif	                    "离开插入模式后自动关闭预览窗口
-let g:ycm_confirm_extra_conf=0                                              "关闭加载.ycm_extra_conf.py提示
+set completeopt=longest,menu                                                " 让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif	                    " 离开插入模式后自动关闭预览窗口
+let g:ycm_filetype_blacklist = {}                                           " 清除黑名单
+let g:ycm_confirm_extra_conf=0                                              " 关闭加载.ycm_extra_conf.py提示
 let g:ycm_collect_identifiers_from_tags_files=1	                            " 开启 YCM 基于标签引擎
 let g:ycm_min_num_of_chars_for_completion=2	                                " 从第2个键入字符就开始罗列匹配项
 let g:ycm_cache_omnifunc=0                                                  " 禁止缓存匹配项,每次都重新生成匹配项
@@ -876,19 +885,24 @@ let g:jsx_ext_required = 0
 " typescript
 " ------------------------------------------------------------------------------------------------------------------------------
 " quramy/tsuquyomi
+" tsserver configuration
+let g:tsuquyomi_use_local_typescript = 0
+" let g:tsuquyomi_use_dev_node_module = 2
+" let g:tsuquyomi_tsserver_path = '/usr/local/lib/node_modules/typescript/lib/tsserver.js'
+" 禁用错误检测, 保存时会很卡
 let g:tsuquyomi_disable_quickfix = 1
+
 let g:tsuquyomi_disable_default_mappings = 1
 let g:tsuquyomi_single_quote_import = 1
 let g:tsuquyomi_shortest_import_path = 1
 
-let g:tsuquyomi_definition_split = 2
+" let g:tsuquyomi_definition_split = 2
 let g:tsuquyomi_use_vimproc = 1
 
 autocmd FileType typescript nmap <buffer> <Leader>rn <Plug>(TsuquyomiRenameSymbol)
 autocmd FileType typescript nmap <buffer> <Leader>rN <Plug>(TsuquyomiRenameSymbolC)
 autocmd FileType typescript nmap <buffer> <Leader>lr <Plug>(TsuquyomiReferences)
 autocmd FileType typescript nmap <buffer> <Leader>li <Plug>(TsuquyomiImplementation)
-" autocmd FileType typescript nmap <buffer> <Leader>jd <Plug>(TsuquyomiDefinition)
 autocmd FileType typescript nmap <buffer> <C-]> <Plug>(TsuquyomiDefinition)
 autocmd FileType typescript nmap <buffer> <Leader>jd <Plug>(TsuquyomiTypeDefinition)
 autocmd FileType typescript nmap <buffer> <Leader>sa :TsuSearch 

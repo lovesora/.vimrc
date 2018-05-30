@@ -1,0 +1,3 @@
+let l:bm_file_version = 1
+let l:bm_sessions = {'default': {'/Users/liuxin/petkit/projects/com-petkit-food-admin-web/src/views/user/coupon/dispatch.html': [{'sign_idx': 9508, 'line_nr': 3, 'content': '        <h1>用户管理和操作</h1>'},],}}
+let l:bm_current_session = 'default'
