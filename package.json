@@ -1,6 +1,6 @@
 {
   "name": "vimrc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "vimrc",
   "main": ".vimrc",
   "scripts": {
