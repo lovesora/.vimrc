@@ -296,7 +296,7 @@ set wildmenu wildmode=full          " 设置显示buffer匹配结果
 
 
 " clipboard
-set clipboard=unnamed               " 系统剪切板
+set clipboard=unnamedplus           " 系统剪切板
 set pastetoggle=<F9>                " 切换到拷贝模式
 
 
